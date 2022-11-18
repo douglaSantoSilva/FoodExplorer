@@ -1,7 +1,7 @@
 import { Knex } from "knex";
 
 export async function up(knex: Knex): Promise<void> {
-  return knex.schema.createTable("permissions", table => {
+  return knex.schema.createTable("roles", table => {
     table.text("id").primary();
     table.text("name").notNullable();
     table.text("description").notNullable();
@@ -10,6 +10,6 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  return knex.schema.dropTable("permissions")
+  return knex.schema.dropTable("roles")
 }
 
