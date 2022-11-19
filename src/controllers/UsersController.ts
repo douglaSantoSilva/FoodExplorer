@@ -1,14 +1,17 @@
 import { Request, Response} from 'express'
-import { AppErrors } from '../utils/AppErrors'
+import { UserRepository } from '../repositories/UserRepository'
+import { UserCreateService } from '../services/UserCreateService' 
 
 export class UsersController {
-  create(request: Request, response: Response) {
+  async create(request: Request, response: Response) {
     const { name, email, password } = request.body
 
-    if(!name || !email || !password) {
-      throw new AppErrors("Preencha todos os campos para fazer o cadastro.")
-    }
+    const userRepository = new UserRepository()
+    const userCreateService = new UserCreateService(userRepository)
 
-    response.json({name, email, password})
+
+   const userId = userCreateService.execute({name, email, password})
+    
+    response.status(201).json({userId})
   }
 }
